@@ -1,0 +1,31 @@
+{
+  "resources": {{
+    "body": [
+      {
+        "type": "script",
+        "src": "eager/video-dl.min.js",
+        "depends": {
+          "github.com/jquery/jquery:jquery.js": "jQuery"
+        }
+      }
+    ]
+  },
+  "options": {
+    "properties": {
+      "output": {
+        "title": "Output selector",
+        "description": "Output html element for the video info and the download urls.",
+        "type": "string",
+        "format": "selector",
+        "order": 0
+      },
+      "input": {
+        "title": "Input selector",
+        "description": "Input html element for the video url.",
+        "type": "string",
+        "format": "selector",
+        "order": 1
+      },
+    }
+  }
+}
