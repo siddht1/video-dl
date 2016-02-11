@@ -58,9 +58,14 @@ api() {
 
  getsize() {
   minfo="$(timeout -skill 5s mediainfo "$a")"
-  info="($(echo "$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//"), $(echo "$minfo" | sed '/File size/!d;s/.*:\s//g'), $(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')" |
-sed 's/\
-//g;s/^, //g;s/, B,/, Unkown size,/g;s/, ,/,/g;s/^B,//g;s/, $//;s/ $//g'))"
+  d=$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//")
+  b=$(echo "$minfo" | sed '/File size/!d;s/.*:\s//g')
+  c=$(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')
+  [ "$b" = "" ] && b="Unkown size"
+  [ "$c" = "" ] && c="Unkown quality"
+  info="($d, $b, $c)"
+#sed 's/\
+#//g;s/^, //g;s/, B,/, Unkown size,/g;s/, ,/,/g;s/^B,//g;s/, $//;s/ $//g'))"
   minfo=
  }
 
