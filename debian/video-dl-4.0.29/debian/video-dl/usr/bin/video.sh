@@ -1,5 +1,5 @@
 #!/bin/bash
-# Video download script v4.0.25
+# Video download script v4.0.29
 # Created by Daniil Gentili (http://daniil.it)
 # Video-dl - Video download programs
 #
@@ -28,7 +28,7 @@
 # v3.3.1 Improved the auto update function and player choice
 # v3.3.2 Squashed some other bugs, fixed download of 302 videos on Mac OS X (curl redirection).
 
-echo "Video download script v4.0.25
+echo "Video download script v4.0.29
 Copyright (C) 2016 Daniil Gentili
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it
@@ -167,9 +167,14 @@ api() {
 
  getsize() {
   minfo="$(timeout -skill 5s mediainfo "$a")"
-  info="($(echo "$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//"), $(echo "$minfo" | sed '/File size/!d;s/.*:\s//g'), $(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')" |
-sed 's/\
-//g;s/^, //g;s/, B,/, Unkown size,/g;s/, ,/,/g;s/^B,//g;s/, $//;s/ $//g'))"
+  d=$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//")
+  b=$(echo "$minfo" | sed '/File size/!d;s/.*:\s//g')
+  c=$(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')
+  [ "$b" = "" ] && b="Unkown size"
+  [ "$c" = "" ] && c="Unkown quality"
+  info="($d, $b, $c)"
+#sed 's/\
+#//g;s/^, //g;s/, B,/, Unkown size,/g;s/, ,/,/g;s/^B,//g;s/, $//;s/ $//g'))"
   minfo=
  }
 
