@@ -18,3 +18,4 @@ script: ". ./travis/cibuild"
 before_install:
 - openssl aes-256-cbc -pass "pass:$pass"
   -in enc.tar.gz.enc -out enc.tar.gz -d -a
+
