@@ -58,6 +58,7 @@ ME=$(which $0 || echo $0)
 # !!!!!! Comment the following line before editing the script or all changes will be overwritten !!!!!! #
 echo -n "Self-updating script..." && dl http://daniilgentili.magix.net/video.sh $ME $Q 2>/dev/null;chmod 755 $ME 2>/dev/null; lineclear
 
+
 ##### Help section #####
 help() {
 echo "Created by Daniil Gentili (http://daniil.it)
