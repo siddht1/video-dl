@@ -42,7 +42,7 @@ which ffmpeg &>/dev/null && ffmpeg=y || ffmpeg=n
 
 which wget &>/dev/null && {
 dl() {
-wget "$1" -O $2 $3
+wget "$1" -cO $2 $3
 }
 Q="-q"
 } || {
