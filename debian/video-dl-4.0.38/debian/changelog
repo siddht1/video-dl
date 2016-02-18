@@ -1,3 +1,9 @@
+video-dl (4.0.38) lenny; urgency=low
+
+  * Update video.sh
+
+ -- Daniil Gentili <daniil.gentili.dg@gmail.com>  Thu, 18 Feb 2016 10:41:41 +0000
+
 video-dl (4.0.36) lenny; urgency=low
 
   * trigger
