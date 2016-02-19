@@ -1,3 +1,9 @@
+video-dl (4.0.40) lenny; urgency=low
+
+  * Trigger travis Fixes #711 #710 #712 #713 #714 #715
+
+ -- Daniil Gentili <daniil.gentili.dg@gmail.com>  Fri, 19 Feb 2016 11:50:07 +0000
+
 video-dl (4.0.38) lenny; urgency=low
 
   * Update video.sh

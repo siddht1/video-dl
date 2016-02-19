@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Fri, 19 Feb 2016 11:50:07 +0000
+Source: video-dl
+Binary: video-dl
+Architecture: source all
+Version: 4.0.40
+Distribution: lenny
+Urgency: low
+Maintainer: Daniil Gentili <daniil.gentili.dg@gmail.com>
+Changed-By: Daniil Gentili <daniil.gentili.dg@gmail.com>
+Description: 
+ video-dl   - Video Download script
+Changes: 
+ video-dl (4.0.40) lenny; urgency=low
+ .
+   * Trigger travis Fixes #711 #710 #712 #713 #714 #715
+Checksums-Sha1: 
+ 0047110d77f295a777fb8b6c325fce9c0153c14c 1443 video-dl_4.0.40.dsc
+ 0114ace6084e5b0701be0399090314d2cbe676d9 19645 video-dl_4.0.40.tar.gz
+ b8d9807dc94b1be7d40284413175a71e0142a135 23308 video-dl_4.0.40_all.deb
+Checksums-Sha256: 
+ 399261a93b5eb02b346a11ffa31cbd46c0ab18487197d3f61f844b758ebe9cde 1443 video-dl_4.0.40.dsc
+ c61d705d31376d87e9ad63a33b343b0914aa00f7d4c219c9e4f7ce23a2f9ab44 19645 video-dl_4.0.40.tar.gz
+ c1a2cbd1e6c8cd1093372de2c62e5d338511bc0f0339f5e15820b2106af7e692 23308 video-dl_4.0.40_all.deb
+Files: 
+ 95f9c368d904438e7b0e68265901bf80 1443 misc optional video-dl_4.0.40.dsc
+ affc4a16ac4fe34efe9ced7e190d0a84 19645 misc optional video-dl_4.0.40.tar.gz
+ ef6dae530a51b3d857340e37ac775b9b 23308 misc optional video-dl_4.0.40_all.deb
