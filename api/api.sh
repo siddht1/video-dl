@@ -24,7 +24,8 @@ api() {
  urltype="$(curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null | sed 's/^HTTP:\/\//http:\/\//g')"
  
  
- echo "$urltype" | grep -qE 'http://www.*.rai..*/dl/RaiTV/programmi/media/.*|http://www.*.rai..*/dl/RaiTV/tematiche/.*|http://www.*.rai..*/ dl/.*PublishingBlock-.*|http://www.*.rai..*/dl/replaytv/replaytv.html.*|http://.*.rai.it/.*|http://www.rainews.it/dl/rainews/.*|https://www.*.rai..*/dl/ RaiTV/programmi/media/.*|https://www.*.rai..*/dl/RaiTV/tematiche/.*|https://www.*.rai..*/dl/.*PublishingBlock-.*|https://www.*.rai..*/dl/ replaytv/replaytv.html.*|https://.*.rai.it/.*|https://www.rainews.it/dl/rainews/.*' && ptype=rai
+ echo "$urltype" | grep -qE '.*rai.it/.*|.*rai.tv/.*|.*rainews.it/.*'  && ptype=rai
+# grep -qE 'http://www.*.rai..*/dl/RaiTV/programmi/media/.*|http://www.*.rai..*/dl/RaiTV/tematiche/.*|http://www.*.rai..*/ dl/.*PublishingBlock-.*|http://www.*.rai..*/dl/replaytv/replaytv.html.*|http://.*.rai.it/.*|http://www.rainews.it/dl/rainews/.*|https://www.*.rai..*/dl/ RaiTV/programmi/media/.*|https://www.*.rai..*/dl/RaiTV/tematiche/.*|https://www.*.rai..*/dl/.*PublishingBlock-.*|https://www.*.rai..*/dl/ replaytv/replaytv.html.*|https://.*.rai.it/.*|https://www.rainews.it/dl/rainews/.*' && ptype=rai
  
  
  echo "$urltype" | grep -qE 'http://www.video.mediaset.it/video/.*|http://www.video.mediaset.it/player/playerIFrame.*|https:// www.video.mediaset.it/video/.*|https://www.video.mediaset.it/player/playerIFrame.*|tgcom24.mediaset.it/video/.*|http://mediaset.it/.*|https:// mediaset.it/.*' && ptype=mediaset
@@ -521,29 +522,30 @@ $format $info $a"
   done <<< "$urls"
   n=
   final="$(echo "$final" | awk '!x[$0]++')"
-  [ "$final" = "" ] && {
-   base="$(echo "$tmpjson" | sed 's/\"/\
+  [ "$videoTitolo" = "" ] && videoTitolo=$(echo "$page" | tr "\n" " " | sed 's/<\/title>.*//;s/.*>//g;s/^ //')
+  formats="$final"
+  # Get the title
+  title="${videoTitolo//[^a-zA-Z0-9 ]/}"
+  title=${title// /_}
+  [ "$formats" = "" ] && {
+   base="$(echo "$json" | sed 's/\"/\
 /g' | egrep '\.mp4|\.mkv|\.flv|\.f4v|\.wmv|\.mov|\.3gp|\.avi|\.m4v|\.mpg|\.mpe|\.mpeg'  | awk '!x[$0]++')"
    checkurl
    unformatted="$base"
    formatoutput
   }
 
-  [ "$final" = "" ] &&  {
+  [ "$formats" = "" ] &&  {
 
    # Get the video URLs
-   base="$(echo "$page" | egrep '\.mp4|\.mkv|\.flv|\.f4v|\.wmv|\.mov|\.3gp|\.avi|\.m4v|\.mpg|\.mpe|\.mpeg' | sed 's/.*http:\/\//http:\/\//;s/\".*//' | sed "s/'.*//" | sed 's/.mp4.*/.mp4/g;s/.mkv.*/.mkv/g;s/.flv.*/.flv/g;s/.f4v.*/.f4v/g;s/.wmv.*/.wmv/g;s/.mov.*/.mov/g;s/.3gp.*/.3gp/g;s/.avi.*/.avi/g;s/.m4v.*/.m4v/g;s/.mpg.*/.mpg/g;s/.mpe.*/.mpe/g;s/.mpeg.*/.mpeg/g' | awk '!x[$0]++')"
+   base="$(echo "$page" | egrep '\.mp4|\.mkv|\.flv|\.f4v|\.wmv|\.mov|\.3gp|\.avi|\.m4v|\.mpg|\.mpe|\.mpeg' | tr -s "'" "\n" | tr -s "\"" "\n" | sed 's/.*http:\/\//http:\/\//;s/\".*//' | sed "s/'.*//" | sed 's/\.mp4.*/.mp4/g;s/\.mkv.*/\.mkv/g;s/\.flv.*/\.flv/g;s/\.f4v.*/\.f4v/g;s/\.wmv.*/\.wmv/g;s/\.mov.*/\.mov/g;s/\.3gp.*/.3gp/g;s/\.avi.*/.avi/g;s/\.m4v.*/.m4v/g;s/\.mpg.*/.mpg/g;s/\.mpe.*/.mpe/g;s/\.mpeg.*/.mpeg/g' | awk '!x[$0]++')"
+
    checkurl
    unformatted="$base"
 
    formatoutput
   }
 
-  [ "$videoTitolo" = "" ] && videoTitolo=$(echo "$page" | tr "\n" " " | sed 's/<\/title>.*//;s/.*>//g;s/^ //')
-  formats="$final"
-  # Get the title
-  title="${videoTitolo//[^a-zA-Z0-9 ]/}"
-  title=${title// /_}
 
 }
 
