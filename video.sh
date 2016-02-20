@@ -53,6 +53,7 @@ curl -L "$1" -o $2 $3
 Q="-s"
 }
 
+
 ##### Self updating section #####
 ME=$(which $0 || echo $0)
 # !!!!!! Comment the following line before editing the script or all changes will be overwritten !!!!!! #
