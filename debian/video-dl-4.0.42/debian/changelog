@@ -1,3 +1,9 @@
+video-dl (4.0.42) lenny; urgency=low
+
+  * API and web version sync
+
+ -- Daniil Gentili <daniil.gentili.dg@gmail.com>  Sat, 20 Feb 2016 04:04:23 +0000
+
 video-dl (4.0.40) lenny; urgency=low
 
   * Trigger travis Fixes #711 #710 #712 #713 #714 #715

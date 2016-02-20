@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sat, 20 Feb 2016 04:04:23 +0000
+Source: video-dl
+Binary: video-dl
+Architecture: source all
+Version: 4.0.42
+Distribution: lenny
+Urgency: low
+Maintainer: Daniil Gentili <daniil.gentili.dg@gmail.com>
+Changed-By: Daniil Gentili <daniil.gentili.dg@gmail.com>
+Description: 
+ video-dl   - Video Download script
+Changes: 
+ video-dl (4.0.42) lenny; urgency=low
+ .
+   * API and web version sync
+Checksums-Sha1: 
+ abfeef9bd589eddcfe949ab0fe8f3026b7b7a9f3 1443 video-dl_4.0.42.dsc
+ 99df8276caa85aa581bf60eb8726b02404384f11 19774 video-dl_4.0.42.tar.gz
+ 9ce3b84fff7c294317eff1262cabcbe8af6a0722 23346 video-dl_4.0.42_all.deb
+Checksums-Sha256: 
+ 5500da2668df1db55b9b213d324b9c18d86f3510fbe444856e74cf02e90363b8 1443 video-dl_4.0.42.dsc
+ 577583c1d054300ee22606f6759b122b4de4b889dccf506d0483a5347fd34183 19774 video-dl_4.0.42.tar.gz
+ 5d0d9096d9cf154a73c50fa2311a47d7471c3b01c1ef58490ea3d4828fe1aeba 23346 video-dl_4.0.42_all.deb
+Files: 
+ 2e3b03ebbb4354a2968589577d7539e7 1443 misc optional video-dl_4.0.42.dsc
+ a6c48cf1397333616d42b283237e8772 19774 misc optional video-dl_4.0.42.tar.gz
+ 0ea57a268a644a0aed8e7a2a57ff77cf 23346 misc optional video-dl_4.0.42_all.deb

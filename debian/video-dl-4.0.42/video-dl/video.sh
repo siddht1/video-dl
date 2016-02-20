@@ -1,5 +1,5 @@
 #!/bin/bash
-# Video download script v4.0.40
+# Video download script v4.0.42
 # Created by Daniil Gentili (http://daniil.it)
 # Video-dl - Video download programs
 #
@@ -28,7 +28,7 @@
 # v3.3.1 Improved the auto update function and player choice
 # v3.3.2 Squashed some other bugs, fixed download of 302 videos on Mac OS X (curl redirection).
 
-echo "Video download script v4.0.40
+echo "Video download script v4.0.42
 Copyright (C) 2016 Daniil Gentili
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions; see https://github.com/danog/video-dl/raw/master/LICENSE."
@@ -134,7 +134,8 @@ api() {
  urltype="$(curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null | sed 's/^HTTP:\/\//http:\/\//g')"
  
  
- echo "$urltype" | grep -qE 'http://www.*.rai..*/dl/RaiTV/programmi/media/.*|http://www.*.rai..*/dl/RaiTV/tematiche/.*|http://www.*.rai..*/ dl/.*PublishingBlock-.*|http://www.*.rai..*/dl/replaytv/replaytv.html.*|http://.*.rai.it/.*|http://www.rainews.it/dl/rainews/.*|https://www.*.rai..*/dl/ RaiTV/programmi/media/.*|https://www.*.rai..*/dl/RaiTV/tematiche/.*|https://www.*.rai..*/dl/.*PublishingBlock-.*|https://www.*.rai..*/dl/ replaytv/replaytv.html.*|https://.*.rai.it/.*|https://www.rainews.it/dl/rainews/.*' && ptype=rai
+ echo "$urltype" | grep -qE '.*rai.it/.*|.*rai.tv/.*|.*rainews.it/.*'  && ptype=rai
+# grep -qE 'http://www.*.rai..*/dl/RaiTV/programmi/media/.*|http://www.*.rai..*/dl/RaiTV/tematiche/.*|http://www.*.rai..*/ dl/.*PublishingBlock-.*|http://www.*.rai..*/dl/replaytv/replaytv.html.*|http://.*.rai.it/.*|http://www.rainews.it/dl/rainews/.*|https://www.*.rai..*/dl/ RaiTV/programmi/media/.*|https://www.*.rai..*/dl/RaiTV/tematiche/.*|https://www.*.rai..*/dl/.*PublishingBlock-.*|https://www.*.rai..*/dl/ replaytv/replaytv.html.*|https://.*.rai.it/.*|https://www.rainews.it/dl/rainews/.*' && ptype=rai
  
  
  echo "$urltype" | grep -qE 'http://www.video.mediaset.it/video/.*|http://www.video.mediaset.it/player/playerIFrame.*|https:// www.video.mediaset.it/video/.*|https://www.video.mediaset.it/player/playerIFrame.*|tgcom24.mediaset.it/video/.*|http://mediaset.it/.*|https:// mediaset.it/.*' && ptype=mediaset
