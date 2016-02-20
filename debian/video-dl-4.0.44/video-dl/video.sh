@@ -1,5 +1,5 @@
 #!/bin/bash
-# Video download script v4.0.42
+# Video download script v4.0.44
 # Created by Daniil Gentili (http://daniil.it)
 # Video-dl - Video download programs
 #
@@ -28,7 +28,7 @@
 # v3.3.1 Improved the auto update function and player choice
 # v3.3.2 Squashed some other bugs, fixed download of 302 videos on Mac OS X (curl redirection).
 
-echo "Video download script v4.0.42
+echo "Video download script v4.0.44
 Copyright (C) 2016 Daniil Gentili
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions; see https://github.com/danog/video-dl/raw/master/LICENSE."
@@ -52,6 +52,7 @@ curl -L "$1" -o $2 $3
 }
 Q="-s"
 }
+
 
 ##### Self updating section #####
 ME=$(which $0 || echo $0)
