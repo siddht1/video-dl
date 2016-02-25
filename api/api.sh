@@ -28,7 +28,7 @@ api() {
 # grep -qE 'http://www.*.rai..*/dl/RaiTV/programmi/media/.*|http://www.*.rai..*/dl/RaiTV/tematiche/.*|http://www.*.rai..*/ dl/.*PublishingBlock-.*|http://www.*.rai..*/dl/replaytv/replaytv.html.*|http://.*.rai.it/.*|http://www.rainews.it/dl/rainews/.*|https://www.*.rai..*/dl/ RaiTV/programmi/media/.*|https://www.*.rai..*/dl/RaiTV/tematiche/.*|https://www.*.rai..*/dl/.*PublishingBlock-.*|https://www.*.rai..*/dl/ replaytv/replaytv.html.*|https://.*.rai.it/.*|https://www.rainews.it/dl/rainews/.*' && ptype=rai
  
  
- echo "$urltype" | grep -qE 'http://www.video.mediaset.it/video/.*|http://www.video.mediaset.it/player/playerIFrame.*|https:// www.video.mediaset.it/video/.*|https://www.video.mediaset.it/player/playerIFrame.*|tgcom24.mediaset.it/video/.*|http://mediaset.it/.*|https:// mediaset.it/.*' && ptype=mediaset
+ echo "$urltype" | grep -qE '.*mediaset.it/video/.*|http://www.video.mediaset.it/player/playerIFrame.*|https://www.video.mediaset.it/video/.*|https://www.video.mediaset.it/player/playerIFrame.*|tgcom24.mediaset.it/video/.*|http://mediaset.it/.*|https://mediaset.it/.*' && ptype=mediaset
  
  echo "$urltype" | grep -qE 'http://.*wittytv.it/.*|https://.*wittytv.it/.*' && ptype=mediaset && witty=y
  
