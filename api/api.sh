@@ -332,12 +332,14 @@ tmpjson="$(wget http://www.rai.it/dl/portale/html/palinsesti/replaytv/static/"$c
   for f in $(echo $* | awk '{ while(++i<=NF) printf (!a[$i]++) ? $i FS : ""; i=split("",a); print "" }'); do
    dl=$(echo "$f" | grep -q '^//' && echo "http:$f" || echo "$f")
 
+
+   base="$(curl "$dl" | sed 's/ /%20/g')" && checkurl
    # 1st method
 
    url="$(timeout -skill 5s wget -qO- "$dl&output=25")
-$(timeout -skill 5s wget "$dl&output=43" -U="" -q -O -)"
+ $(timeout -skill 5s wget "$dl&output=43" -U="" -q -O -)"
 
-   url="$(echo "$url" | sed 's/[>]/\
+   url="$(echo "$url" | sed 's/ /%20/g;s/[>]/\
 /g;s/[<]/\
 /g')"
 
@@ -345,18 +347,22 @@ $(timeout -skill 5s wget "$dl&output=43" -U="" -q -O -)"
 
 
    # 2nd method
+   [ "$base" = "" ] && {
+    base=$(curl -w "%{url_effective}\n" -L -s -I -S "$dl" -A "" -o /dev/null) && checkurl
+   }
 
    [ "$base" = "" ] && {
-    base="$(eval echo "$(for f in $(echo "$url" | grep ","); do number="$(echo "$f" | sed 's/http\:\/\///g;s/\/.*//;s/[^0-9]//g;s/^.*\(.\{1\}\)$/\1/')"; echo "$f" | sed 's/.*Italy/Italy/;s/^/http\:\/\/creativemedia'$number'\.rai\.it\//;s/,/{/;s/,\./}\./;s/\.mp4.*/\.mp4/'; done)")" && checkurl
+    base="$(for f in $(echo "$url" | grep ","); do number="$(echo "$f" | sed 's/http\:\/\///g;s/\/.*//;s/[^0-9]//g;s/^.*\(.\{1\}\)$/\1/')"; echo "$f" | sed 's/.*Italy/Italy/;s/^/http\:\/\/creativemedia'$number'\.rai\.it\//;s/,/{/;s/,\./}\./;s/\.mp4.*/\.mp4/'; done)" 
+    base="$(eval echo "$base")" && checkurl
    }
  
 
    # 3rd and 4th method
    [ "$base" = "" ] && {
     url="$(wget "$dl&output=4" -q -O -)"
-    [ "$url" != "" ] && echo "$url" | grep -q 'creativemedia\|wms' && base="$url" || base=$(curl -w "%{url_effective}\n" -L -s -I -S "$dl" -A "" -o /dev/null)
-    checkurl
+    [ "$url" != "" ] && echo "$url" | grep -q 'creativemedia\|wms' && base="$url" && checkurl
    }
+
 
    TMPURLS="$TMPURLS
 $base"
