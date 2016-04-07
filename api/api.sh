@@ -58,7 +58,7 @@ api() {
  # Get video information
 
  getsize() {
-  minfo="$(timeout -skill 5s mediainfo "$a")"
+  minfo="$(timeout -skill 10s mediainfo "$a")"
   d=$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//")
   b=$(echo "$minfo" | sed '/File size/!d;s/.*:\s//g')
   c=$(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')
@@ -189,15 +189,8 @@ $u"
 
 
 
-[ "$smooth" != "" ] && for a in $smooth; do echo "High quality (smooth streaming) $a";done
-
-
 [ "$mp4" != "" ] && for a in $mp4; do getsize
  echo "Medium-high quality $info $a";done
-
-
-
-[ "$apple" != "" ] && for a in $apple; do echo "Medium-low quality  (apple streaming, pseudo-m3u8) $a";done
 
 
 [ "$wmv" != "" ] && for a in $wmv; do getsize
@@ -214,6 +207,9 @@ $u"
 
  echo "Low quality $info $a";done
 
+[ "$smooth" != "" ] && for a in $smooth; do echo "High quality (smooth streaming, smooth) $a";done
+
+[ "$apple" != "" ] && for a in $apple; do echo "Medium-low quality  (apple streaming, pseudo-m3u8, m3u8) $a";done
 
 
 )"
@@ -425,17 +421,17 @@ ${base//$t\.mp4/$i\.mp4}"; tbase="$(echo "$tbase" | grep -Ev "_([0-9]{3,4})_([0-
    id=$(echo "$page" | sed '/[<]iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=/!d;s/.*\<iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=//;s/\&.*//')
 
    # Get the title
-videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/.*\<meta content\=\"//;s/\".*//g')
+   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/\" property=\".*title\".*//g;s/.*\<meta content\=\"//;s/\".*//g')
 
   } || {
    $(echo "$page" | grep "var videoMetadataId")
    id="$videoMetadataId"
-   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" name=\"title\"\/[>]/!d;s/.*\<meta content\=\"//;s/\".*//g')
+   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/\" property=\".*title\".*//g;s/.*\<meta content\=\"//;s/\".*//g')
   }
 
   # Get the video URLs using the video id
   unformatted="$(wget "http://cdnselector.xuniplay.fdnames.com/GetCDN.aspx?streamid=$id" -O - -q -U="" | sed 's/</\
-&/g;/http:\/\//!d;s/.*src=\"//;s/\".*//;/^\s*$/d')"
+/g' | grep http | sed 's/.*http/http/g;s/\".*//g')"
 
   formatoutput
 
@@ -584,7 +580,7 @@ video $formats"
 
  [ "$second" = "check" ] && {
   wget -qO /dev/null "$1" && {
-   youtube-dl "$1" &>/dev/null || youtube-dl --verbose -J "$1" 2>&1
+   youtube-dl -J "$1" &>/dev/null || youtube-dl --verbose -J "$1" 2>&1
   };
   exit
  }
