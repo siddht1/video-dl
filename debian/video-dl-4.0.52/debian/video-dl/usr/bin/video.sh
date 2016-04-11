@@ -1,5 +1,5 @@
 #!/bin/bash
-# Video download script v4.0.50
+# Video download script v4.0.52
 # Created by Daniil Gentili (http://daniil.it)
 # Video-dl - Video download programs
 #
@@ -28,7 +28,7 @@
 # v3.3.1 Improved the auto update function and player choice
 # v3.3.2 Squashed some other bugs, fixed download of 302 videos on Mac OS X (curl redirection).
 
-echo "Video download script v4.0.50
+echo "Video download script v4.0.52
 Copyright (C) 2016 Daniil Gentili
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions; see https://github.com/danog/video-dl/raw/master/LICENSE."
@@ -169,7 +169,7 @@ api() {
  # Get video information
 
  getsize() {
-  minfo="$(timeout -skill 5s mediainfo "$a")"
+  minfo="$(timeout -skill 10s mediainfo "$a")"
   d=$(echo "$a" | sed "s/.*\.//;s/[^a-z|0-9].*//")
   b=$(echo "$minfo" | sed '/File size/!d;s/.*:\s//g')
   c=$(echo "$minfo" | sed '/Width\|Height/!d;s/.*:\s//g;s/\spixels//g;s/\s//g;/^\s*$/d' | tr -s "\n" x | sed 's/x$//g')
@@ -300,15 +300,8 @@ $u"
 
 
 
-[ "$smooth" != "" ] && for a in $smooth; do echo "High quality (smooth streaming) $a";done
-
-
 [ "$mp4" != "" ] && for a in $mp4; do getsize
  echo "Medium-high quality $info $a";done
-
-
-
-[ "$apple" != "" ] && for a in $apple; do echo "Medium-low quality  (apple streaming, pseudo-m3u8) $a";done
 
 
 [ "$wmv" != "" ] && for a in $wmv; do getsize
@@ -325,6 +318,9 @@ $u"
 
  echo "Low quality $info $a";done
 
+[ "$smooth" != "" ] && for a in $smooth; do echo "High quality (smooth streaming, smooth) $a";done
+
+[ "$apple" != "" ] && for a in $apple; do echo "Medium-low quality  (apple streaming, pseudo-m3u8, m3u8) $a";done
 
 
 )"
@@ -536,17 +532,17 @@ ${base//$t\.mp4/$i\.mp4}"; tbase="$(echo "$tbase" | grep -Ev "_([0-9]{3,4})_([0-
    id=$(echo "$page" | sed '/[<]iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=/!d;s/.*\<iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=//;s/\&.*//')
 
    # Get the title
-videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/.*\<meta content\=\"//;s/\".*//g')
+   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/\" property=\".*title\".*//g;s/.*\<meta content\=\"//;s/\".*//g')
 
   } || {
    $(echo "$page" | grep "var videoMetadataId")
    id="$videoMetadataId"
-   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" name=\"title\"\/[>]/!d;s/.*\<meta content\=\"//;s/\".*//g')
+   videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/\" property=\".*title\".*//g;s/.*\<meta content\=\"//;s/\".*//g')
   }
 
   # Get the video URLs using the video id
   unformatted="$(wget "http://cdnselector.xuniplay.fdnames.com/GetCDN.aspx?streamid=$id" -O - -q -U="" | sed 's/</\
-&/g;/http:\/\//!d;s/.*src=\"//;s/\".*//;/^\s*$/d')"
+/g' | grep http | sed 's/.*http/http/g;s/\".*//g')"
 
   formatoutput
 
