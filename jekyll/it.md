@@ -385,7 +385,7 @@ Per eseguire e importare il video usa iFile o Filza.
 Installa [Cygwin](https://www.cygwin.com) (Non dimenticare di installare wget durante il processo di installazione), apri la riga di comando Cygwin e scrivi:
 
 ```
-wget http://daniilgentili.magix.net/win/video.sh -O video.sh
+wget http://daniilgentili.magix.net/win/video.sh -O video.sh && chmod +x video.sh
 ```
 
 Esegui lo script con:
@@ -398,7 +398,7 @@ Nella directory dove lo hai scaricato.
 Per usare lo script da qualsiasi directory usa questo comando.
 
 ```
-cd /bin && wget http://daniilgentili.magix.net/win/video.sh -O video.sh && cd $OLDPWD
+cd /bin && wget http://daniilgentili.magix.net/win/video.sh -O video.sh && chmod +x video.sh && cd $OLDPWD
 ```
 
 
