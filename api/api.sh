@@ -418,7 +418,7 @@ ${base//$t\.mp4/$i\.mp4}"; tbase="$(echo "$tbase" | grep -Ev "_([0-9]{3,4})_([0-
   # Witty tv recongition
   [ "$witty" = "y" ] && {
    # Get the video id
-   id=$(echo "$page" | sed '/[<]iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=/!d;s/.*\<iframe id=\"playeriframe\" src=\"http\:\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=//;s/\&.*//')
+   id=$(echo "$page" | sed '/[<]iframe id=\"playeriframe\" src=\"[^\/]*\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=/!d;s/.*\<iframe id=\"playeriframe\" src=\"[^\/]*\/\/www.video.mediaset.it\/player\/playerIFrame.shtml?id\=//;s/\&.*//')
 
    # Get the title
    videoTitolo=$(echo "$page" | sed '/[<]meta content=\".*\" property=\".*title\"\/[>]/!d;s/\" property=\".*title\".*//g;s/.*\<meta content\=\"//;s/\".*//g')
